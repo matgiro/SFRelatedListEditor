@@ -106,13 +106,7 @@
                     Save
                 </button>
             </div>
-        </div> 
-        
-        <div aura:id="viewAllLink" class="slds-card__footer">
-            <div class="slds-align_absolute-center">
-                <ui:outputURL value="{!v.viewAllLink}" label="View All"/>              
-            </div>
-        </div>                 
+        </div>        
         
     </article>  
     

@@ -1,4 +1,4 @@
-<a href="https://githubsfdeploy.herokuapp.com?owner=hicham-elmansouri/&repo=SFRelatedListEditor">
+<a href="https://githubsfdeploy.herokuapp.com?owner=ak-com-dev/&repo=SFRelatedListEditor">
   <img alt="Deploy to Salesforce"
        src="https://raw.githubusercontent.com/afawcett/githubsfdeploy/master/src/main/webapp/resources/img/deploy.png">
 </a>

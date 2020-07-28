@@ -18,7 +18,7 @@
                  <lightning:buttonMenu alternativeText="Actions" 
                                        iconSize="x-small"
                                        onselect="{!c.handleMenuSelect}">
-                     <lightning:menuItem label="Delete" value="delete" />
+                     <lightning:menuItem label="削除" value="delete" />
                      <!--lightning:menuItem label="Edit" value="edit"/-->                
                  </lightning:buttonMenu>
              </td>

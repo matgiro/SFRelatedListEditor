@@ -19,7 +19,10 @@
                 });
                 
                 metadataAction.setCallback(this, function(res) {            
-                    if (res.getState() === "SUCCESS" && res.getReturnValue()) {        
+                    if (res.getState() === "SUCCESS" && res.getReturnValue()) {
+                        console.log(res.getReturnValue().name);
+                         console.log(res.getReturnValue().sobject);
+                         console.log(res.getReturnValue().columns);
                         component.set("v.relatedListName", res.getReturnValue().name);
                         component.set("v.relatedObjectName",  res.getReturnValue().sobject);
                         component.set("v.columns", res.getReturnValue().columns);                                               
@@ -45,7 +48,7 @@
         
         //Update the default values for the current record
         var defaultValues = component.get("v.defaultValues") || "{}";
-        component.set("v.defaultValues", defaultValues.replace("$recordId", component.get("v.recordId")));
+        component.set("v.defaultValues", defaultValues.replace("$recordId", component.get("v.recordId")).replace("$recordId", component.get("v.recordId")));
         
         //Update the filter property for the current record
         var filter = component.get("v.filter") || "{}";
@@ -67,7 +70,8 @@
     },
     cancelEdit : function(component, event, helper) {         
         helper.refreshItems(component, component.get("v.oldItems"), "read");                       
-        helper.refreshUIElements(component, event);        
+        helper.refreshUIElements(component, event);
+        helper.loadItems(component); 
     },
     saveEdit : function(component, event, helper) {                       
         if(helper.checkItems(component)){
@@ -87,9 +91,9 @@
                     //Display a confirmation Taost
                     var toastEvent = $A.get("e.force:showToast");
                     toastEvent.setParams({
-                        "title": "Success!",
+                        "title": "",
                         "type" : "success",
-                        "message": "The items list has been updated successfully"
+                        "message": "保存されました"
                     });
                     toastEvent.fire(); 
                     
@@ -110,10 +114,10 @@
                 
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
-                    "title": "Error!",
+                    "title": "",
                     "type" : "error",
                     "mode" : "sticky",
-                    "message": "Server Error:" + errMsg
+                    "message": "保存に失敗しました:" + errMsg
                 });
                 toastEvent.fire();                    
             }        
@@ -123,10 +127,10 @@
         }else{
             var toastEvent = $A.get("e.force:showToast");
             toastEvent.setParams({
-                "title": "Error!",
+                "title": "",
                 "type" : "error",
                 "mode" : "sticky",
-                "message": "Save failed. Check your data and try again"
+                "message": "保存に失敗しました"
             });
             toastEvent.fire();
         }
@@ -146,6 +150,24 @@
             } 
             else if (res.getState() === "ERROR") {
                 $A.log("Errors", res.getError());
+                var errMsg = null;
+                var errors = res.getError();
+                
+                if(errors[0] && errors[0].message){
+                    errMsg = errors[0].message;
+                } 
+                if(errors[0] && errors[0].pageErrors) {
+                    errMsg = errors[0].pageErrors[0].message;
+                }
+                
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "title": "",
+                    "type" : "error",
+                    "mode" : "sticky",
+                    "message": "保存に失敗しました:" + errMsg
+                });
+                toastEvent.fire();
             }           
         });  
         
@@ -175,11 +197,29 @@
                 
                 else if (res.getState() === "ERROR") {
                     $A.log("Errors", res.getError());
+                    var errMsg = null;
+                var errors = res.getError();
+                
+                if(errors[0] && errors[0].message){
+                    errMsg = errors[0].message;
+                } 
+                if(errors[0] && errors[0].pageErrors) {
+                    errMsg = errors[0].pageErrors[0].message;
+                }
+                
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "title": "",
+                    "type" : "error",
+                    "mode" : "sticky",
+                    "message": "保存に失敗しました:" + errMsg
+                });
+                toastEvent.fire();
                 }                                   
             });   
             
-            loaderDialog.set('v.title', 'Deleting ' + item.Name);
-            loaderDialog.set("v.content", "Please wait while deleting the record");
+            loaderDialog.set('v.title', '削除 ' + item.Name);
+            loaderDialog.set("v.content", "削除中です");
             loaderDialog.set('v.showDialog', true);
             
             $A.enqueueAction(deleteAction);            
@@ -188,8 +228,8 @@
     editCallback: function(component, event, helper) {
         if (event.getParam('confirmResult')){
             var loaderDialog = component.find("loaderDialog");
-            loaderDialog.set('v.title', 'Saving ' + event.getParam('context').Name);
-            loaderDialog.set("v.content", "Please wait while saving the record"); 
+            loaderDialog.set('v.title', '保存 ' + event.getParam('context').Name);
+            loaderDialog.set("v.content", "保存中です"); 
             loaderDialog.set('v.showDialog', true);           
         }
     },
@@ -199,12 +239,12 @@
         
         helper.notifyItemUpdated(component, event.getParam('context'));                   
     },
-    actionDelete : function(component, event, helper){       
+    actionDelete : function(component, event, helper){      
         var deleteDialog = component.find("deleteDialog"); 
         var item = event.getParam('item');
         
-        deleteDialog.set('v.title', 'Delete ' + item.Name);
-        deleteDialog.set('v.content', 'Do you really want to delete this record?')                       
+        deleteDialog.set('v.title', '削除 ' + item.Name);
+        deleteDialog.set('v.content', '本当に削除しますか?')                       
         deleteDialog.set('v.context', item);
         
         deleteDialog.set('v.showDialog', true);        

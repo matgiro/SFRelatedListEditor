@@ -30,7 +30,7 @@
             
             //Add None option 
             if(!component.get("v.required")){
-                options.unshift({ label: "--None--", value: "" });
+                options.unshift({ label: "--なし--", value: null });
             }
         }
         catch(ex){
@@ -114,4 +114,4 @@
     customInit : function(component, event){
         //Virtual function
     }    
-}
+})

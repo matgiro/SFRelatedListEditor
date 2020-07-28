@@ -12,6 +12,7 @@
     <aura:attribute name="displayMode" type="String" default="read"/>
     
     <aura:attribute name="canCreate" type="Boolean" default="true" access="global"/>
+    <aura:attribute name="canEdit"   type="Boolean" default="true" access="global"/>
     <aura:attribute name="filter" type="String" access="global"/>
     <aura:attribute name="aggregate" type="String" access="global"/>
     <aura:attribute name="aggregations" type="Object[]"/>
@@ -43,11 +44,13 @@
                 </div>
             </header>
             <div class="slds-no-flex">
-                <lightning:buttonIcon aura:id="editButton"
-                                      iconName="utility:edit" 
-                                      size="medium" variant="bare"
-                                      onclick="{! c.startEdit }" 
-                                      alternativeText="Edit Items" />
+                <aura:if isTrue="{!v.canEdit}">
+                    <lightning:buttonIcon aura:id="editButton"
+                                          iconName="utility:edit" 
+                                          size="medium" variant="bare"
+                                          onclick="{! c.startEdit }" 
+                                          alternativeText="Edit Items" />
+                </aura:if>
                 <aura:if isTrue="{!and(v.canCreate, v.displayMode != 'read')}">
                     <lightning:buttonIcon aura:id="createButton"
                                           iconName="utility:new" 
@@ -98,12 +101,12 @@
                 <button type="button" 
                         class="slds-button slds-button--neutral" 
                         onclick="{! c.cancelEdit }">
-                    Cancel
+                    キャンセル
                 </button>
                 <button type="button" 
                         class="slds-button slds-button--brand" 
                         onclick="{! c.saveEdit }">
-                    Save
+                    保存
                 </button>
             </div>
         </div>        

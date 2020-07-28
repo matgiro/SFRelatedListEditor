@@ -8,7 +8,7 @@
         //Show/hide the edit button
         var editButton = component.find("editButton");
         $A.util.toggleClass(editButton, "hidden");
-    },   
+    },
     toogleGridActions : function(component, event){
         //Show/hide the action bar on the bottom
         var gridActions = component.find("gridActions");
@@ -42,6 +42,7 @@
         dataAction.setCallback(this, function(res) {                                    
             if (res.getState() === "SUCCESS") {                 
                 var items = res.getReturnValue();   
+                console.log(items);
                 
                 //Clean the items list
                 this.cleanItems(component, items);
@@ -108,7 +109,7 @@
             var column = cellCmp.get("v.column");
             var item = items[cellCmp.get("v.itemRank")];
             
-            item[column.name] = cellCmp.get("v.value");  
+            item[column.name] = cellCmp.get("v.value");
             
             if(column.type=='Reference'){
                 item[column.name + '__Name'] = cellCmp.get("v.refLabel");
@@ -232,10 +233,10 @@
         
         //Update the UI
         component.set("v.items", JSON.parse(JSON.stringify(items)));                 
-        component.set("v.aggregations", aggregations); 
+        component.set("v.aggregations", aggregations);
     },
     notifyItemDeleted : function(component, item){
-        var newItems = component.get("v.items");
+        var newItems = this.updateItems(component);
         newItems = newItems.filter(function(elt){
             return item.Id !=  elt.Id;
         });
@@ -280,7 +281,7 @@
         
         getObjectAction.setCallback(this, function(res) {                                    
             if (res.getState() === "SUCCESS") {                 
-                var newItems = component.get("v.items");
+                var newItems = this.updateItems(component);
                 newItems.push(res.getReturnValue());
                 
                 //Clean the items list

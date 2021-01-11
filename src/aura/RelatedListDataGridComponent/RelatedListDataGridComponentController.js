@@ -93,7 +93,7 @@
                     toastEvent.setParams({
                         "title": "",
                         "type" : "success",
-                        "message": "保存されました"
+                        "message": "Saved succesffully"
                     });
                     toastEvent.fire(); 
                     
@@ -117,7 +117,7 @@
                     "title": "",
                     "type" : "error",
                     "mode" : "sticky",
-                    "message": "保存に失敗しました:" + errMsg
+                    "message": "Failed to save:" + errMsg
                 });
                 toastEvent.fire();                    
             }        
@@ -130,7 +130,7 @@
                 "title": "",
                 "type" : "error",
                 "mode" : "sticky",
-                "message": "保存に失敗しました"
+                "message": "Failed to save"
             });
             toastEvent.fire();
         }
@@ -165,7 +165,7 @@
                     "title": "",
                     "type" : "error",
                     "mode" : "sticky",
-                    "message": "保存に失敗しました:" + errMsg
+                    "message": "Failed to save:" + errMsg
                 });
                 toastEvent.fire();
             }           
@@ -212,14 +212,14 @@
                     "title": "",
                     "type" : "error",
                     "mode" : "sticky",
-                    "message": "保存に失敗しました:" + errMsg
+                    "message": "Failed to save:" + errMsg
                 });
                 toastEvent.fire();
                 }                                   
             });   
             
-            loaderDialog.set('v.title', '削除 ' + item.Name);
-            loaderDialog.set("v.content", "削除中です");
+            loaderDialog.set('v.title', 'Deleting ' + item.Name);
+            loaderDialog.set("v.content", "Please wait while deleting the record");
             loaderDialog.set('v.showDialog', true);
             
             $A.enqueueAction(deleteAction);            
@@ -228,8 +228,8 @@
     editCallback: function(component, event, helper) {
         if (event.getParam('confirmResult')){
             var loaderDialog = component.find("loaderDialog");
-            loaderDialog.set('v.title', '保存 ' + event.getParam('context').Name);
-            loaderDialog.set("v.content", "保存中です"); 
+            loaderDialog.set('v.title', 'Saving ' + event.getParam('context').Name);
+            loaderDialog.set("v.content", "Please wait while saving the record"); 
             loaderDialog.set('v.showDialog', true);           
         }
     },
@@ -243,8 +243,8 @@
         var deleteDialog = component.find("deleteDialog"); 
         var item = event.getParam('item');
         
-        deleteDialog.set('v.title', '削除 ' + item.Name);
-        deleteDialog.set('v.content', '本当に削除しますか?')                       
+        deleteDialog.set('v.title', 'Delete ' + item.Name);
+        deleteDialog.set('v.content', 'Do you really want to delete this?')                       
         deleteDialog.set('v.context', item);
         
         deleteDialog.set('v.showDialog', true);        

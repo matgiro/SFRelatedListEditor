@@ -37,8 +37,8 @@
             
             <div class="slds-modal__footer slds-modal__footer--directional">
                 <aura:If isTrue="{!v.type == 'CONFIRM'}">
-                    <button class="slds-button slds-button--neutral " onclick="{!c.closeModal}">いいえ</button>
-                    <button class="slds-button slds-button--brand " onclick="{!c.closeModalYes}">はい</button>
+                    <button class="slds-button slds-button--neutral " onclick="{!c.closeModal}">No</button>
+                    <button class="slds-button slds-button--brand " onclick="{!c.closeModalYes}">Yes</button>
                 </aura:If>
             </div>                
         </div>

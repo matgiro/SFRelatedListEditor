@@ -30,7 +30,7 @@
             
             //Add None option 
             if(!component.get("v.required")){
-                options.unshift({ label: "--なし--", value: null });
+                options.unshift({ label: "--None--", value: null });
             }
         }
         catch(ex){

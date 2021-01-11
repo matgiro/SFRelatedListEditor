@@ -101,12 +101,12 @@
                 <button type="button" 
                         class="slds-button slds-button--neutral" 
                         onclick="{! c.cancelEdit }">
-                    キャンセル
+                    Cancel
                 </button>
                 <button type="button" 
                         class="slds-button slds-button--brand" 
                         onclick="{! c.saveEdit }">
-                    保存
+                    Save
                 </button>
             </div>
         </div>        
